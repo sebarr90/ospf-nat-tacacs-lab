@@ -28,7 +28,7 @@ Incluye **logging centralizado** y rutas hacia Internet simulada.
 
 - Configuración general de cada router:
 
-```text
+
 R1:
 router ospf 1
  router-id 1.1.1.1
