@@ -115,7 +115,7 @@ Activar CEF para simulación avanzada: ip cef
 
 📂 Cómo probar el laboratorio
 
-Cargar el [archivo](link) .pkt en Packet Tracer.
+Cargar el [archivo](https://github.com/sebarr90/ospf-nat-tacacs-lab/blob/main/M5%20U2%20Desafio_Marcos_Arriagada.pkt) .pkt en Packet Tracer.
 
 Verificar adyacencias OSPF con show ip ospf neighbor.
 
