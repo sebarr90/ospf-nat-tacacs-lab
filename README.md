@@ -64,3 +64,66 @@ router ospf 1
  no passive-interface Serial0/0/0
  network 172.16.11.0 0.0.0.255 area 0
  network 172.16.12.0 0.0.0.255 area 0
+
+🌐 NAT/PAT en R3
+
+access-list 10 permit 172.16.12.0 0.0.0.255
+access-list 10 deny any
+
+interface Serial0/0/0
+ ip nat inside
+interface Serial0/0/1
+ ip nat outside
+
+ip nat inside source list 10 interface Serial0/0/1 overload
+ip route 0.0.0.0 0.0.0.0 208.50.0.2
+
+✅ NAT permite salida a Internet solo desde 172.16.12.0/24
+
+🔒 TACACS+ en R1 y R2
+
+aaa new-model
+aaa authentication login default group tacacs+
+tacacs-server host 172.16.22.3 key <clave>
+
+Usuarios locales de respaldo
+
+👤 user1 🔑 clave1
+👤 user2 🔑 clave2
+
+📢 Syslog
+
+Todos los routers envían logs al servidor 172.16.12.20:
+
+logging userinfo
+logging trap debugging
+logging 172.16.12.20
+
+📝 Recomendaciones de seguridad
+
+Activar cifrado de contraseñas: service password-encryption
+
+Aplicar autenticación TACACS+ en líneas VTY:
+
+line vty 0 4
+ login authentication default
+
+
+Eliminar RIP si no se utiliza: no router rip
+
+Activar CEF para simulación avanzada: ip cef
+
+📂 Cómo probar el laboratorio
+
+Cargar el [archivo](link) .pkt en Packet Tracer.
+
+Verificar adyacencias OSPF con show ip ospf neighbor.
+
+Comprobar NAT con ping desde la LAN 172.16.12.0/24 hacia Internet.
+
+Testear autenticación TACACS+ en R1 y R2 mediante acceso a VTY.
+
+Revisar logs en el servidor Syslog (172.16.12.20).
+
+Autor: Marcos Arriagada Sáez
+Tecnologías usadas: Packet Tracer, OSPF, NAT/PAT, TACACS+, Syslog
